@@ -18,10 +18,7 @@ export const useFormSchema = () => {
     games: z.array(z.object({
       name: z.string().min(1, 'Game name is required'),
       skill: z.enum(['--', 'None', 'Noob', 'Normal', 'Hardcore'])
-        .refine(value => {
-          return value !== '--'
-        }
-          , 'Skill level is required')
+        .refine(value => value !== '--', 'Skill level is required')
     }))
   })
 
