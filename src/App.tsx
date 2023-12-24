@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { IoMdClose } from "react-icons/io"
 import { useFormSchema } from './hook/useFormSchema'
+import Input from './components/Input'
+import SelectInput from './components/SelectInput'
 import './styles/global.css'
 
 function App() {
@@ -33,37 +35,31 @@ function App() {
 
   return (
     <>
-      <main className='h-screen bg-zinc-950 text-zinc-300 flex flex-col items-center justify-center gap-[5vh]'>
+      <main className='min-h-screen text-zinc-300 flex flex-col items-center justify-center overflow-auto'>
 
         <form
           onSubmit={handleSubmit(createUser)}
           className='flex flex-col items-center w-full max-w-xs gap-10'
         >
-          <div className='flex flex-col w-full'>
-            <label htmlFor="email">Email</label>
-            <input
-              type='text'
-              className='border-zinc-600 bg-zinc-900 shadow-sm rounded px-3 h-10'
-              {...register('email')}
-            />
-            {errors.email && <span className="text-xs text-red-600">{errors.email?.message}</span>}
-          </div>
+          <Input
+            label='Email'
+            type='email'
+            error={errors.email?.message}
+            {...register('email')}
+          />
 
-          <div className='flex flex-col w-full'>
-            <label htmlFor="email">Password</label>
-            <input
-              type='password'
-              className='border-zinc-600 bg-zinc-900 shadow-sm rounded px-3 h-10'
-              {...register('password')}
-            />
-            {errors.password && <span className="text-xs text-red-600">{errors.password?.message}</span>}
-          </div>
+          <Input
+            label='Password'
+            type='password'
+            error={errors.password?.message}
+            {...register('password')}
+          />
 
           <div className='w-full flex flex-col gap-1'>
             <div className='flex justify-between items-center'>
               <label htmlFor=''>Games</label>
               <button
-                className='text-emerald-500 text-sm'
+                className='text-[#ffce00] text-sm'
                 type='button'
                 onClick={addGame}
               >
@@ -74,47 +70,40 @@ function App() {
             {fields.map((field, index) => {
               return (
                 <div key={field.id} className='w-full flex justify-between items-center gap-2'>
-                  <div className='flex flex-col gap-1 w-[60%]'>
-                    <input
-                      type='text'
-                      className='border-zinc-600 bg-zinc-900 shadow-sm rounded px-3 h-10'
-                      {...register(`games.${index}.name`)}
+                  <Input
+                    type='text'
+                    error={errors.games?.[index]?.name?.message}
+                    {...register(`games.${index}.name`)}
+                  />
+
+                  <SelectInput
+                    items={gameSkillsOptions}
+                    error={errors.games?.[index]?.skill?.message}
+                    {...register(`games.${index}.skill`)}
+                  />
+
+                  <button
+                    className={errors.games?.[index] && 'mb-5'}
+                    type='button'
+                    onClick={() => remove(index)}>
+                    <IoMdClose
+                      color="red"
                     />
-
-                    {errors.games?.[index]?.name && <span className="text-xs text-red-600">{errors.games?.[index]?.name?.message}</span>}
-                  </div>
-
-                  <div className='flex flex-col gap-1'>
-                    <select
-                      className='border-zinc-600 bg-zinc-900 shadow-sm rounded px-3 h-10'
-                      {...register(`games.${index}.skill`)}
-                    >
-                      {gameSkillsOptions.map((skill, index) => (
-                        <option key={index} value={skill}>{skill}</option>
-                      ))}
-                    </select>
-                    {errors.games?.[index]?.skill && <span className="text-xs text-red-600">{errors.games?.[index]?.skill?.message}</span>}
-                  </div>
-                  {fields.length > 1 &&
-                    <button
-                      className={(errors.games?.[index]?.name || errors.games?.[index]?.skill) && 'mb-5'}
-                      type='button'
-                      onClick={() => remove(index)}>
-                      <IoMdClose
-                        color="red"
-                      />
-                    </button>
-                  }
+                  </button>
                 </div>
               )
             })}
           </div>
 
-
-          <button type="submit" className='w-full h-10 rounded font-semibold text-white bg-emerald-500 mt-5'>Save</button>
+          <button
+            type="submit"
+            className='w-full h-10 rounded font-semibold text-white border-[1px] border-[#ffce00] hover:text-black hover:bg-[#ffce00] mt-5'
+          >
+            Save
+          </button>
         </form>
 
-        <pre>{output}</pre>
+        <pre className='mt-10'>{output}</pre>
       </main>
     </>
   )
