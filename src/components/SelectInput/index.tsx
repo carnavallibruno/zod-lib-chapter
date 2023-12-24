@@ -14,7 +14,7 @@ const SelectInput = forwardRef<HTMLSelectElement, SelectInputProps>(
     } = props
 
     return (
-      <div className='flex flex-col gap-1'>
+      <div className='flex flex-col'>
         <select
           className='border-zinc-600 bg-zinc-900 shadow-sm rounded px-3 h-10'
           ref={ref}
