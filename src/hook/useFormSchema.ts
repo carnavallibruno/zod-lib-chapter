@@ -22,6 +22,11 @@ export const useFormSchema = () => {
       skill: z.enum(['--', 'None', 'Noob', 'Normal', 'Hardcore'])
         .refine(value => value !== '--', 'Skill level is required')
     }))
+    ,
+    profilePicture: z.instanceof(FileList)
+      .refine(value => value.length > 0, 'Profile picture is required')
+      .transform(list => list.item(0))
+      .refine(file => file!.size <= 5 * 1024 * 1024, 'Profile picture must be less than 5MB')
   })
 
   type CreateUserFormData = z.infer<typeof createUserFormSchema>

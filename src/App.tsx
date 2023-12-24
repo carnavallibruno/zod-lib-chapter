@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { IoMdClose } from "react-icons/io"
+import { IoMdClose } from 'react-icons/io'
 import { useFormSchema } from './hook/useFormSchema'
 import Input from './components/Input'
 import SelectInput from './components/SelectInput'
@@ -9,6 +9,8 @@ function App() {
   const [output, setOutput] = useState<string>('')
 
   const createUser = (data: any) => {
+    console.log(data.profilePicture)
+
     setOutput(JSON.stringify(data, null, 2))
   }
 
@@ -36,7 +38,6 @@ function App() {
   return (
     <>
       <main className='min-h-screen text-zinc-300 flex flex-col items-center justify-center overflow-auto'>
-
         <form
           onSubmit={handleSubmit(createUser)}
           className='flex flex-col items-center w-full max-w-xs gap-10'
@@ -69,7 +70,10 @@ function App() {
 
             {fields.map((field, index) => {
               return (
-                <div key={field.id} className='w-full flex justify-between items-center gap-2'>
+                <div
+                  key={field.id}
+                  className='w-full flex justify-between items-center gap-2'
+                >
                   <Input
                     type='text'
                     error={errors.games?.[index]?.name?.message}
@@ -85,14 +89,23 @@ function App() {
                   <button
                     className={errors.games?.[index] && 'mb-5'}
                     type='button'
-                    onClick={() => remove(index)}>
-                    <IoMdClose
-                      color="red"
-                    />
+                    onClick={() => remove(index)}
+                  >
+                    <IoMdClose color="red" />
                   </button>
                 </div>
-              )
+              );
             })}
+          </div>
+
+          <div className="w-full flex flex-col gap-1">
+            <label htmlFor="">Profile Picture</label>
+            <input
+              type="file"
+              accept="image/*"
+              {...register("profilePicture")}
+            />
+            {errors.profilePicture && <span className="text-red-500 text-sm">{errors.profilePicture.message}</span>}
           </div>
 
           <button
