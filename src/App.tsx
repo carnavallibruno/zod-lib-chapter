@@ -103,7 +103,7 @@ function App() {
           </button>
         </form>
 
-        <pre className='mt-10'>{output}</pre>
+        {output && <pre className='mt-10'>{output}</pre>}
       </main>
     </>
   )
