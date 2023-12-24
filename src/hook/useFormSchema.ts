@@ -4,6 +4,7 @@ import { useFieldArray, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 export const useFormSchema = () => {
+
   const createUserFormSchema = z.object({
     email: z.string()
       .min(1, 'Email is required')
@@ -14,7 +15,8 @@ export const useFormSchema = () => {
     ,
     password: z.string()
       .min(1, 'Password is required')
-      .min(6, 'Password must be at least 6 characters'),
+      .min(6, 'Password must be at least 6 characters')
+    ,
     games: z.array(z.object({
       name: z.string().min(1, 'Game name is required'),
       skill: z.enum(['--', 'None', 'Noob', 'Normal', 'Hardcore'])
