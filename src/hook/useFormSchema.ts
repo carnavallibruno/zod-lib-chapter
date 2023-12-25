@@ -17,6 +17,9 @@ export const useFormSchema = () => {
       .min(1, 'Password is required')
       .min(6, 'Password must be at least 6 characters')
     ,
+    confirmWord: z.literal('Chewbacca')
+      .refine(value => value === 'Chewbacca', 'Confirm word must be Chewbacca')
+    ,
     games: z.array(z.object({
       name: z.string().min(1, 'Game name is required'),
       skill: z.enum(['--', 'None', 'Noob', 'Normal', 'Hardcore'])

@@ -56,6 +56,13 @@ function App() {
             {...register('password')}
           />
 
+          <Input
+            label='Confirm Word'
+            type='text'
+            error={errors.confirmWord?.message}
+            {...register('confirmWord')}
+          />
+
           <div className='w-full flex flex-col gap-1'>
             <div className='flex justify-between items-center'>
               <label htmlFor=''>Games</label>
