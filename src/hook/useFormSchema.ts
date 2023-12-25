@@ -4,6 +4,7 @@ import { useFieldArray, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 export const useFormSchema = () => {
+  const confirmWord = 'Chewbacca'
 
   const createUserFormSchema = z.object({
     email: z.string()
@@ -17,8 +18,9 @@ export const useFormSchema = () => {
       .min(1, 'Password is required')
       .min(6, 'Password must be at least 6 characters')
     ,
-    confirmWord: z.literal('Chewbacca')
-      .refine(value => value === 'Chewbacca', 'Confirm word must be Chewbacca')
+    confirmWord: z.literal('Chewbacca', {
+      errorMap: () => ({ message: `Word must be ${confirmWord}` }),
+    })
     ,
     games: z.array(z.object({
       name: z.string().min(1, 'Game name is required'),

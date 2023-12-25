@@ -1,17 +1,17 @@
 import { useState } from 'react'
-import { IoMdClose } from 'react-icons/io'
+import { IoMdClose } from "react-icons/io"
 import { useFormSchema } from './hook/useFormSchema'
 import Input from './components/Input'
 import SelectInput from './components/SelectInput'
 import './styles/global.css'
 
 function App() {
-  const [output, setOutput] = useState<string>('')
+  const [userData, setUserData] = useState<string>('')
 
   const createUser = (data: any) => {
     console.log(data.profilePicture)
 
-    setOutput(JSON.stringify(data, null, 2))
+    setUserData(JSON.stringify(data, null, 2))
   }
 
   const {
@@ -38,6 +38,7 @@ function App() {
   return (
     <>
       <main className='min-h-screen text-zinc-300 flex flex-col items-center justify-center overflow-auto'>
+
         <form
           onSubmit={handleSubmit(createUser)}
           className='flex flex-col items-center w-full max-w-xs gap-10'
@@ -77,10 +78,7 @@ function App() {
 
             {fields.map((field, index) => {
               return (
-                <div
-                  key={field.id}
-                  className='w-full flex justify-between items-center gap-2'
-                >
+                <div key={field.id} className='w-full flex justify-between items-center gap-2'>
                   <Input
                     type='text'
                     error={errors.games?.[index]?.name?.message}
@@ -96,12 +94,11 @@ function App() {
                   <button
                     className={errors.games?.[index] && 'mb-5'}
                     type='button'
-                    onClick={() => remove(index)}
-                  >
+                    onClick={() => remove(index)}>
                     <IoMdClose color="red" />
                   </button>
                 </div>
-              );
+              )
             })}
           </div>
 
@@ -112,7 +109,7 @@ function App() {
               accept="image/*"
               {...register("profilePicture")}
             />
-            {errors.profilePicture && <span className="text-red-500 text-sm">{errors.profilePicture.message}</span>}
+            {errors.profilePicture && <span className="text-red-500 text-xs">{errors.profilePicture.message}</span>}
           </div>
 
           <button
@@ -123,7 +120,7 @@ function App() {
           </button>
         </form>
 
-        {output && <pre className='mt-10'>{output}</pre>}
+        {userData && <pre className='mt-10'>{userData}</pre>}
       </main>
     </>
   )
