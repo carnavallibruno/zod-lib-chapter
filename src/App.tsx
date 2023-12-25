@@ -43,7 +43,7 @@ function App() {
         >
           <Input
             label='Email'
-            type='email'
+            type='text'
             error={errors.email?.message}
             {...register('email')}
           />
