@@ -3,7 +3,7 @@ import { forwardRef } from "react"
 interface InputProps {
   label?: string
   type: string
-  error: string | undefined
+  error?: string | undefined
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
